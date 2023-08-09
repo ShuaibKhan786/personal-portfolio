@@ -8,12 +8,12 @@ export const WinStartBox = () => {
     // sometime we need to use inline style
     // becz I cannot get a reference of an element
     // when component is not mounted 
-    <div className="winstartbox wintaskbar-item-border0" 
+    <div className="winstartbox wintaskbar-item-border0 c-dummy-1" 
         style={{bottom : `${taskbarHeigClac()}px`}}>
-        <div>windowBox1</div>
-        <div>windowBox2</div>
-        <div>windowBox3</div>
-        <div>windowBox4</div>
+        <div className='c-dummy-1'>windowBox1</div>
+        <div className='c-dummy-1'>windowBox1</div>
+        <div className='c-dummy-1'>windowBox1</div>
+        <div className='c-dummy-1'>windowBox1</div>
     </div>
   )
 }

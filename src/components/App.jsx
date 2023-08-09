@@ -3,6 +3,7 @@ import { WinTaskbar } from './WinTaskbar';
 import { WinStartBox } from './WinStartBox';
 import { WinTaskbarSett } from './WinTaskbarSett';
 import { WinRightClick } from './WinRightClick';
+import { WinCommonMenuItem } from './common/WinCommonMenuItem';
 // all the svg icons to be used
 import {ReactComponent as WinStart} from '../asset/icons/window95-start-logo (2).svg'
 const SettingContext = createContext();
@@ -16,15 +17,19 @@ const App = () => {
   const taskbarEleRef = useRef(null);
   const rcMenuEleRef = useRef(null);
   const toolbarMenuEleRef = useRef(null);
+  const toolbarInnerSettEleRef = useRef(null);
   const [themeEleTextContent,setThemeEleTextContent] = useState(null);
   const [startTogg,setStartTogg] = useState(false);
   const [settTogg,setSettTogg] = useState(false);
+  const [innerSettTogg,setInnerSettTogg] = useState(false);
   // mouse position 
   // state for the mousePos of window taskbar
   const [clientX,setClientX] = useState(0);
   // state for the mousePos of window rightclick
   const [mousePos,setMousePos] = useState({});
   const [rightclickTogg,setRightclickTogg] = useState(false);
+  // state for the position of the inner component of the window toolbar setting
+  const [innerSettPos,setInnerSettPos] = useState({});
   // # reusable () that removes and add className from an element
   const add = (eleRef,classname) =>{
     eleRef.current.classList.add(classname);
@@ -57,12 +62,13 @@ const App = () => {
     }
   }
   //() to add an rightclick event to the window taskbar
-  // added common-dummy-0 className to every taskbar item to achieve 
+  // added c-dummy-0 className to every taskbar item to achieve 
   // the rightclick popup using event-deligation concept
   const winTaskbar = (event) =>{
     event.preventDefault();
     setRightclickTogg(false);
-    if (event.target.classList.contains('common-dummy-0')) {
+    setInnerSettTogg(false);
+    if (event.target.classList.contains('c-dummy-0')) {
       setSettTogg(false);
     } else {
       // in order to stop overflowing the WinTaskbarSett
@@ -79,6 +85,7 @@ const App = () => {
     if(!event.target.classList.contains('dummy-1')){
       setStartTogg(false);
       setSettTogg(false);
+      setInnerSettTogg(false);
       remove(startEleRef,'wintaskbar-item-border1');
       add(startEleRef,'wintaskbar-item-border0');
     }
@@ -90,6 +97,7 @@ const App = () => {
   const start = () =>{
     setSettTogg(false);
     setRightclickTogg(false);
+    setInnerSettTogg(false);
     if(startTogg === false){
       setStartTogg(true);
       setSettTogg(false);
@@ -113,7 +121,7 @@ const App = () => {
 //**** all the WinRightCLick component of window starts here
   const rightCLick = (event) => {
     event.preventDefault();
-    const classNamesToCheck = ['wintaskbar', 'common-dummy-0' , 'dummy-1' , 'wintaskbar-outer-item'];
+    const classNamesToCheck = ['wintaskbar', 'c-dummy-0' , 'dummy-1' , 'wintaskbar-outer-item'];
     const isAnyClassFound = classNamesToCheck.some(className => event.target.classList.contains(className));
     if(!isAnyClassFound){
       setMousePos(prevMousePos => ({
@@ -124,15 +132,19 @@ const App = () => {
      setRightclickTogg(true);
      setStartTogg(false);
      setSettTogg(false);
+     setInnerSettTogg(false);
      remove(startEleRef,'wintaskbar-item-border1');
      add(startEleRef,'wintaskbar-item-border0');
     }
   };
   const turnOffCompo0 = (event) => {
-    if (!event.target.classList.contains('dummy-1')) {
+    const classNamesToCheck = ['c-dummy-1' , 'dummy-1' ];
+    const isAnyClassFound = classNamesToCheck.some(className => event.target.classList.contains(className));
+    if (!isAnyClassFound) {
       setRightclickTogg(false);
       setStartTogg(false);
       setSettTogg(false);
+      setInnerSettTogg(false);
       remove(startEleRef, 'wintaskbar-item-border1');
       add(startEleRef, 'wintaskbar-item-border0');
     }
@@ -170,6 +182,32 @@ const App = () => {
     };
   }, []);
 // till here ****
+const commonSettFunc = (event) =>{
+  const flag = event.target.textContent;
+  if(flag === "alignment"){
+    setInnerSettTogg(true);
+    const innerWidth = toolbarInnerSettEleRef.current.offsetWidth;
+    const outerWidth = toolbarMenuEleRef.current.offsetWidth;
+    if(clientX+outerWidth+innerWidth > window.innerWidth){
+      setInnerSettPos({
+        left: clientX - innerWidth,
+        bottom: taskbarHeigClac() + toolbarMenuEleRef.current.offsetHeight / 2
+      })
+    }else{
+      setInnerSettPos({
+        left: clientX + outerWidth,
+        bottom: taskbarHeigClac() + toolbarMenuEleRef.current.offsetHeight / 2
+      })
+    }
+  }
+}
+// these are style components to be used for the inner window toolbar setting
+const toolbarInnerSettStyle = {
+  visibility: innerSettTogg ? 'visible' : 'hidden',
+  position: innerSettTogg ? "fixed" : "absolute",
+  bottom : innerSettTogg ? `${innerSettPos.bottom}px`: "-9999px" , 
+  left: innerSettTogg ? `${innerSettPos.left}px` : "-9999px",
+};
   return (
     <SettingContext.Provider
       value={{theme,
@@ -188,12 +226,20 @@ const App = () => {
         toolbarMenuEleRef,
         settTogg,
         turnOffCompo,
+        commonSettFunc,
         WinStart
       }}>
       <WinTaskbar />
       { startTogg ? <WinStartBox /> : null}
       <WinTaskbarSett />
       <WinRightClick />
+      {/* this component is for the alignment of inner window toolbar setting */}
+      <WinCommonMenuItem 
+        items={['left','center','right','default']}
+        divIndices={[0,1,2]}
+        elemRefernce={toolbarInnerSettEleRef}
+        elemStyle={toolbarInnerSettStyle}
+      />
     </SettingContext.Provider>
   )
 }

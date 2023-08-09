@@ -1,9 +1,12 @@
 import React,{useContext}from 'react';
 import { SettingContext } from '../components/App';
-
+import { WinCommonMenuItem } from './common/WinCommonMenuItem';
 
 export const WinTaskbarSett = () => {
   const {  taskbarHeigClac , clientX , settTogg ,toolbarMenuEleRef} = useContext(SettingContext);
+  // sometime we need to use inline style
+  // becz I cannot get a reference of an element
+  // when component is not mounted 
   const contextMenuStyle = {
     bottom : settTogg ? `${taskbarHeigClac()}px`: "-9999px" , 
     left: settTogg ? `${clientX}px` : "-9999px",
@@ -11,17 +14,12 @@ export const WinTaskbarSett = () => {
     position: settTogg ? "fixed" : "absolute",
   };
   return (
-    // sometime we need to use inline style
-    // becz I cannot get a reference of an element
-    // when component is not mounted 
-    <div className="winstartbox wintaskbar-item-border0" 
-        ref={toolbarMenuEleRef}
-        style={contextMenuStyle}>
-        <div>setting1</div>
-        <div>setting2</div>
-        <div>setting3</div>
-        <div>setting4</div>
-    </div>
+    <WinCommonMenuItem
+      items={['alignment', 'position']}
+      elemRefernce={toolbarMenuEleRef}
+      elemStyle={contextMenuStyle}
+      divIndices={[0]} 
+    />
   )
 }
 

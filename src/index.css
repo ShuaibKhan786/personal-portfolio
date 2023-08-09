@@ -29,6 +29,7 @@
   --shade10: #a0a0a0;
   --shade11:#8c8c8c;
   --shade12: #f1f1f1;
+  --shade13: #010066;
 }
 .light {
   --bg : var(--shade0);
@@ -38,6 +39,7 @@
   --borshade1 : var(--shade7);
   --borshade2 : var(--shade8);
   --borshade3 : var(--shade4);   
+  --bachov : var(--shade13);
 }
 .dark { 
   --bg : var(--shade1);
@@ -47,6 +49,7 @@
   --borshade1: var(--shade7);
   --borshade2 : var(--shade9);
   --borshade3 : var(--shade10);
+  --bachov : var(--shade1);
 }
 *{
   box-sizing: border-box;
@@ -71,7 +74,6 @@ body{
   bottom: 0;
   left: 0;
   z-index: 2;    
-  gap: 1rem
 }
 .wintaskbar-outer-item{
   display: flex;
@@ -137,6 +139,7 @@ body{
   border: none;
   outline: none;
   border: 2px solid ;
+  padding: 1px 0 1px 0;
 }
 /* for some common use I have to shift down this css*/
 .wintaskbar-item-border0{
@@ -152,14 +155,17 @@ body{
   border-right-color: var(--borshade0);
   border-radius: 0%;
 }
-/* for window rightclick item */
-.winrightclick-item{
+/* for window rightclick item and window taskbar setting item*/
+.wincommon-item{
   background-color: inherit;
   padding: 0.12rem 1rem;
+  margin-right: 1px;
 }
-.winrightclick-item:hover{
+.wincommon-item:hover{
   font-weight: bold;
   cursor: pointer;
+  background-color: var(--bachov);
+  color: var(--shade12);
 }
 /* common line i,e a line between the items for separation */
 .commonLine {
@@ -167,6 +173,7 @@ body{
   border-top: 1.4px solid var(--shade11);
   border-bottom: 1.4px solid var(--shade12);
 }
+
 /* for mobile responsive */
 @media screen and (max-width : 600px){
   .wintaskbar-item{
