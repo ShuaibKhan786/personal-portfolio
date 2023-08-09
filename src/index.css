@@ -1,0 +1,179 @@
+@font-face {
+  font-family: 'win-font';
+  src: url(../src/asset/fonts/W95FA.otf);
+  font-display: block;
+}
+@font-face {
+  font-family: 'win-font-bold';
+  src: url(../src/asset/fonts/MS-Sans-Serif-8pt-bold.ttf);
+  font-display: block;
+}
+:root{
+  /* background colors */
+  --shade0: #087c7c;
+  --shade1: #272727;
+  /* font colors */
+  --sahde11: #000;
+  --shade12: #cccccc;
+  /* windowtaskbar colors */
+  --shade2: #c3c3c3;
+  --shade3: #414141;
+  /* border colors */
+  --shade4: #ebebeb;
+  --shade5: #252525;
+  --shade6: #b3b3b3;
+  --shade7: #060606;
+  /* border colors for time-item only*/
+  --shade8: #797979;
+  --shade9: #1a1a1a;
+  --shade10: #a0a0a0;
+  --shade11:#8c8c8c;
+  --shade12: #f1f1f1;
+}
+.light {
+  --bg : var(--shade0);
+  --fcolor : var(--sahde11);
+  --navbg : var(--shade2);
+  --borshade0 : var(--shade4);  
+  --borshade1 : var(--shade7);
+  --borshade2 : var(--shade8);
+  --borshade3 : var(--shade4);   
+}
+.dark { 
+  --bg : var(--shade1);
+  --fcolor: var(--shade12);
+  --navbg: var(--shade3);
+  --borshade0: var(--shade6);
+  --borshade1: var(--shade7);
+  --borshade2 : var(--shade9);
+  --borshade3 : var(--shade10);
+}
+*{
+  box-sizing: border-box;
+}
+body{
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--fcolor);
+  font-family: 'win-font';
+  letter-spacing: 0.4px;
+  z-index: 1;
+}
+
+.wintaskbar{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: var(--navbg);
+  border-top: 2px solid var(--borshade0) ;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2;    
+  gap: 1rem
+}
+.wintaskbar-outer-item{
+  display: flex;
+}
+.wintaskbar-item {
+  padding: 0.2rem 0.6rem;
+  margin: 0.2rem;
+  background-color: inherit;
+  border: none;
+  outline: none;
+  border: 2px solid ;
+  font-weight: 900;
+  /* just to make the item align perfectly at center */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* just for the input background only and placeholder */
+.wintaskbar-item-inp::placeholder{
+  font-family: 'win-font';
+  font-size: 16px;
+  color: var(--fcolor);
+  
+}
+.wintaskbar-item-inp-light{
+   background-image: url(../src/asset/image/background-input.png);
+}
+.wintaskbar-item-inp-dark{
+  background-image: url(../src/asset/image/background-input-dark.png);
+}
+/* just for time-item font weight */
+.wintaskbar-item-time{
+  font-weight: lighter;
+}
+/*  */
+.winstart-item-start{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5px;
+}
+.winstart-item-start > svg{
+  height: 20px;
+  width:20px;
+  z-index: -1;
+}
+
+/* for time-item border only */
+.wintaskbar-item-border2{
+  border: 1.8px solid;
+  border-top-color: var(--borshade2);
+  border-left-color: var(--borshade2);
+  border-bottom-color: var(--borshade3);
+  border-right-color: var(--borshade3);
+}
+/* for window start box */
+.winstartbox{
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  z-index: 2;
+  background-color: var(--navbg);
+  border: none;
+  outline: none;
+  border: 2px solid ;
+}
+/* for some common use I have to shift down this css*/
+.wintaskbar-item-border0{
+  border-top-color: var(--borshade0);
+  border-left-color: var(--borshade0);
+  border-bottom-color: var(--borshade1);
+  border-right-color: var(--borshade1);
+}
+.wintaskbar-item-border1{
+  border-top-color: var(--borshade1);
+  border-left-color: var(--borshade1);
+  border-bottom-color: var(--borshade0);
+  border-right-color: var(--borshade0);
+  border-radius: 0%;
+}
+/* for window rightclick item */
+.winrightclick-item{
+  background-color: inherit;
+  padding: 0.12rem 1rem;
+}
+.winrightclick-item:hover{
+  font-weight: bold;
+  cursor: pointer;
+}
+/* common line i,e a line between the items for separation */
+.commonLine {
+  margin: 0px 4px;
+  border-top: 1.4px solid var(--shade11);
+  border-bottom: 1.4px solid var(--shade12);
+}
+/* for mobile responsive */
+@media screen and (max-width : 600px){
+  .wintaskbar-item{
+    padding: 0.2rem 0.4rem;
+    margin: 0.2rem  0.1rem;
+  }
+  .wintaskbar-item-inp{
+    width: 120px;
+  }
+}
