@@ -17,11 +17,13 @@ const App = () => {
   const taskbarEleRef = useRef(null);
   const rcMenuEleRef = useRef(null);
   const toolbarMenuEleRef = useRef(null);
-  const toolbarInnerSettEleRef = useRef(null);
+  const toolbarInnerSettEleRef0 = useRef(null);
+  const toolbarInnerSettEleRef1 = useRef(null);
   const [themeEleTextContent,setThemeEleTextContent] = useState(null);
   const [startTogg,setStartTogg] = useState(false);
   const [settTogg,setSettTogg] = useState(false);
-  const [innerSettTogg,setInnerSettTogg] = useState(false);
+  const [innerSettTogg0,setInnerSettTogg0] = useState(false);
+  const [innerSettTogg1,setInnerSettTogg1] = useState(false);
   // mouse position 
   // state for the mousePos of window taskbar
   const [clientX,setClientX] = useState(0);
@@ -29,7 +31,8 @@ const App = () => {
   const [mousePos,setMousePos] = useState({});
   const [rightclickTogg,setRightclickTogg] = useState(false);
   // state for the position of the inner component of the window toolbar setting
-  const [innerSettPos,setInnerSettPos] = useState({});
+  const [innerSettPos0,setInnerSettPos0] = useState({});
+  const [innerSettPos1,setInnerSettPos1] = useState({});
   // # reusable () that removes and add className from an element
   const add = (eleRef,classname) =>{
     eleRef.current.classList.add(classname);
@@ -67,7 +70,8 @@ const App = () => {
   const winTaskbar = (event) =>{
     event.preventDefault();
     setRightclickTogg(false);
-    setInnerSettTogg(false);
+    setInnerSettTogg0(false);
+    setInnerSettTogg1(false);
     if (event.target.classList.contains('c-dummy-0')) {
       setSettTogg(false);
     } else {
@@ -85,7 +89,8 @@ const App = () => {
     if(!event.target.classList.contains('dummy-1')){
       setStartTogg(false);
       setSettTogg(false);
-      setInnerSettTogg(false);
+      setInnerSettTogg0(false);
+      setInnerSettTogg1(false);
       remove(startEleRef,'wintaskbar-item-border1');
       add(startEleRef,'wintaskbar-item-border0');
     }
@@ -97,7 +102,8 @@ const App = () => {
   const start = () =>{
     setSettTogg(false);
     setRightclickTogg(false);
-    setInnerSettTogg(false);
+    setInnerSettTogg0(false);
+    setInnerSettTogg1(false);
     if(startTogg === false){
       setStartTogg(true);
       setSettTogg(false);
@@ -132,7 +138,8 @@ const App = () => {
      setRightclickTogg(true);
      setStartTogg(false);
      setSettTogg(false);
-     setInnerSettTogg(false);
+     setInnerSettTogg0(false);
+     setInnerSettTogg1(false);
      remove(startEleRef,'wintaskbar-item-border1');
      add(startEleRef,'wintaskbar-item-border0');
     }
@@ -144,7 +151,8 @@ const App = () => {
       setRightclickTogg(false);
       setStartTogg(false);
       setSettTogg(false);
-      setInnerSettTogg(false);
+      setInnerSettTogg0(false);
+      setInnerSettTogg1(false);
       remove(startEleRef, 'wintaskbar-item-border1');
       add(startEleRef, 'wintaskbar-item-border0');
     }
@@ -183,30 +191,62 @@ const App = () => {
   }, []);
 // till here ****
 const commonSettFunc = (event) =>{
+  // event deligation 
   const flag = event.target.textContent;
-  if(flag === "alignment"){
-    setInnerSettTogg(true);
-    const innerWidth = toolbarInnerSettEleRef.current.offsetWidth;
-    const outerWidth = toolbarMenuEleRef.current.offsetWidth;
-    if(clientX+outerWidth+innerWidth > window.innerWidth){
-      setInnerSettPos({
-        left: clientX - innerWidth,
-        bottom: taskbarHeigClac() + toolbarMenuEleRef.current.offsetHeight / 2
-      })
-    }else{
-      setInnerSettPos({
-        left: clientX + outerWidth,
-        bottom: taskbarHeigClac() + toolbarMenuEleRef.current.offsetHeight / 2
-      })
-    }
+  switch (flag) {
+    case "alignment":
+      setInnerSettTogg0(true);
+      setInnerSettTogg1(false);
+      const alignInnerWidth = toolbarInnerSettEleRef0.current.offsetWidth;
+      const alignOuterWidth = toolbarMenuEleRef.current.offsetWidth;
+      if(clientX+alignOuterWidth+alignInnerWidth > window.innerWidth){
+        setInnerSettPos0({
+          left: clientX - alignInnerWidth,
+          bottom: taskbarHeigClac() + toolbarMenuEleRef.current.offsetHeight / 2
+        })
+      }else{
+        setInnerSettPos0({
+          left: clientX + alignOuterWidth,
+          bottom: taskbarHeigClac() + toolbarMenuEleRef.current.offsetHeight / 2
+        })
+      }
+      break;
+    case "position":
+      setInnerSettTogg1(true);
+      setInnerSettTogg0(false);
+      const posInnerWidth = toolbarInnerSettEleRef1.current.offsetWidth;
+      const posOuterWidth = toolbarMenuEleRef.current.offsetWidth;
+      if(clientX+posOuterWidth+posInnerWidth > window.innerWidth){
+        setInnerSettPos1({
+          left: clientX - posInnerWidth,
+          bottom: taskbarHeigClac() 
+        })
+      }else{
+        setInnerSettPos1({
+          left: clientX + posOuterWidth,
+          bottom: taskbarHeigClac() 
+        })
+      }
+      break;
+    default:
+      break;
   }
 }
 // these are style components to be used for the inner window toolbar setting
-const toolbarInnerSettStyle = {
-  visibility: innerSettTogg ? 'visible' : 'hidden',
-  position: innerSettTogg ? "fixed" : "absolute",
-  bottom : innerSettTogg ? `${innerSettPos.bottom}px`: "-9999px" , 
-  left: innerSettTogg ? `${innerSettPos.left}px` : "-9999px",
+// alignment
+const toolbarInnerSettStyle0 = {
+  visibility: innerSettTogg0 ? 'visible' : 'hidden',
+  position: innerSettTogg0 ? "fixed" : "absolute",
+  bottom : innerSettTogg0 ? `${innerSettPos0.bottom}px`: "-9999px" , 
+  left: innerSettTogg0 ? `${innerSettPos0.left}px` : "-9999px",
+};
+// these are style components to be used for the inner window toolbar setting
+// position
+const toolbarInnerSettStyle1 = {
+  visibility: innerSettTogg1 ? 'visible' : 'hidden',
+  position: innerSettTogg1 ? "fixed" : "absolute",
+  bottom : innerSettTogg1 ? `${innerSettPos1.bottom}px`: "-9999px" , 
+  left: innerSettTogg1 ? `${innerSettPos1.left}px` : "-9999px",
 };
   return (
     <SettingContext.Provider
@@ -237,8 +277,15 @@ const toolbarInnerSettStyle = {
       <WinCommonMenuItem 
         items={['left','center','right','default']}
         divIndices={[0,1,2]}
-        elemRefernce={toolbarInnerSettEleRef}
-        elemStyle={toolbarInnerSettStyle}
+        elemRefernce={toolbarInnerSettEleRef0}
+        elemStyle={toolbarInnerSettStyle0}
+      />
+      {/* this component is for the position of inner window toolbar setting */}
+      <WinCommonMenuItem 
+        items={['top','bottom']}
+        divIndices={[0,]}
+        elemRefernce={toolbarInnerSettEleRef1}
+        elemStyle={toolbarInnerSettStyle1}
       />
     </SettingContext.Provider>
   )

@@ -15,8 +15,8 @@ export const WinRightClick = () => {
   };
   return (
     <WinCommonMenuItem 
-        items={['background1','background2','background3','background4','refresh','properties']}
-        divIndices={[3,4]}
+        items={['background1','background2','background3','background4','refresh',`${false ? 'exit-fullscreen' : 'fullscreen'}`,'properties']}
+        divIndices={[3,4,5]}
         elemRefernce={rcMenuEleRef}
         elemStyle={contextMenuStyle}
     />
