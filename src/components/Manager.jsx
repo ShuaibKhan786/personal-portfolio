@@ -6,9 +6,9 @@ import { WinRightClick } from './WinRightClick';
 import { WinCommonMenuItem } from './common/WinCommonMenuItem';
 // all the svg icons to be used
 import {ReactComponent as WinStart} from '../asset/icons/window95-start-logo (2).svg'
-const SettingContext = createContext();
+export const SettingContext = createContext();
 
-const App = () => {
+export const Manager = () => {
 // ***** all the states of WinTaskbar component manageses 
 // ***** from here
   // refernce for the theme,start,taskbar elements in the WinTaskbar component
@@ -19,11 +19,16 @@ const App = () => {
   const toolbarMenuEleRef = useRef(null);
   const toolbarInnerSettEleRef0 = useRef(null);
   const toolbarInnerSettEleRef1 = useRef(null);
+  const winStartBoxRef = useRef(null);
   const [themeEleTextContent,setThemeEleTextContent] = useState(null);
   const [startTogg,setStartTogg] = useState(false);
   const [settTogg,setSettTogg] = useState(false);
   const [innerSettTogg0,setInnerSettTogg0] = useState(false);
   const [innerSettTogg1,setInnerSettTogg1] = useState(false);
+  const [alignment,setAlignment] = useState("space-between");
+  const [position,setPosition] = useState("bottom");
+  const [border,setBorder] = useState("borderTop");
+  const [transform,setTransform] = useState("rotate(180deg)");
   // mouse position 
   // state for the mousePos of window taskbar
   const [clientX,setClientX] = useState(0);
@@ -130,11 +135,10 @@ const App = () => {
     const classNamesToCheck = ['wintaskbar', 'c-dummy-0' , 'dummy-1' , 'wintaskbar-outer-item'];
     const isAnyClassFound = classNamesToCheck.some(className => event.target.classList.contains(className));
     if(!isAnyClassFound){
-      setMousePos(prevMousePos => ({
-        ...prevMousePos,
+      setMousePos({
         clientx: event.clientX,
         clienty: event.clientY
-      }));
+      });
      setRightclickTogg(true);
      setStartTogg(false);
      setSettTogg(false);
@@ -169,7 +173,7 @@ const App = () => {
       const adjustedLeft = Math.min(mousePos.clientx, window.innerWidth - menuWidth);
       
       // Calculate maximum top position to avoid overlap with the taskbar
-      const maxTop = window.innerHeight - menuHeight - taskbarHeigClac();
+      const maxTop = window.innerHeight - menuHeight - (position === "bottom" ? taskbarHeigClac() : 0);
       const adjustedTop = Math.min(mousePos.clienty, maxTop);
 
       setMousePos({
@@ -197,56 +201,132 @@ const commonSettFunc = (event) =>{
     case "alignment":
       setInnerSettTogg0(true);
       setInnerSettTogg1(false);
+      remove(startEleRef,'wintaskbar-item-border1');
+      add(startEleRef,'wintaskbar-item-border0');
+      setStartTogg(false);
       const alignInnerWidth = toolbarInnerSettEleRef0.current.offsetWidth;
       const alignOuterWidth = toolbarMenuEleRef.current.offsetWidth;
+      const alignOuterHeight = position === "top" ? 0 : toolbarMenuEleRef.current.offsetHeight / 2;
       if(clientX+alignOuterWidth+alignInnerWidth > window.innerWidth){
         setInnerSettPos0({
           left: clientX - alignInnerWidth,
-          bottom: taskbarHeigClac() + toolbarMenuEleRef.current.offsetHeight / 2
+          bottom: taskbarHeigClac() + alignOuterHeight
         })
       }else{
         setInnerSettPos0({
           left: clientX + alignOuterWidth,
-          bottom: taskbarHeigClac() + toolbarMenuEleRef.current.offsetHeight / 2
+          bottom: taskbarHeigClac() + alignOuterHeight
         })
       }
       break;
     case "position":
       setInnerSettTogg1(true);
       setInnerSettTogg0(false);
+      setStartTogg(false);
+      remove(startEleRef,'wintaskbar-item-border1');
+      add(startEleRef,'wintaskbar-item-border0');
       const posInnerWidth = toolbarInnerSettEleRef1.current.offsetWidth;
       const posOuterWidth = toolbarMenuEleRef.current.offsetWidth;
+      const posOuterHeight = position === "bottom" ? 0 : toolbarMenuEleRef.current.offsetHeight / 2;
       if(clientX+posOuterWidth+posInnerWidth > window.innerWidth){
         setInnerSettPos1({
           left: clientX - posInnerWidth,
-          bottom: taskbarHeigClac() 
+          bottom: taskbarHeigClac() + posOuterHeight
         })
       }else{
         setInnerSettPos1({
           left: clientX + posOuterWidth,
-          bottom: taskbarHeigClac() 
+          bottom: taskbarHeigClac() + posOuterHeight
         })
       }
       break;
-    default:
+    case "left":
+      setAlignment("left");
+      setInnerSettTogg0(false);
+      setSettTogg(false);
       break;
+    case "center":
+      setAlignment("center");
+      setInnerSettTogg0(false);
+      setSettTogg(false);
+      break;    
+    case "right":
+      setAlignment("right");
+      setInnerSettTogg0(false);
+      setSettTogg(false);
+      break;    
+    case "default":
+      setAlignment("space-between");
+      setInnerSettTogg0(false);
+      setSettTogg(false);
+      break;
+    case "top":
+      setPosition("top");
+      setBorder("borderBottom");
+      setInnerSettTogg1(false);
+      setSettTogg(false);
+      setTransform("rotate(360deg)");
+      break;
+    case "bottom":
+      setPosition("bottom");
+      setBorder("borderTop");
+      setInnerSettTogg1(false);
+      setSettTogg(false);
+      setTransform("rotate(180deg)");
+      break;
+      default:
+    break;
   }
 }
-// these are style components to be used for the inner window toolbar setting
+// these are style objects to be used for the inner window toolbar setting
 // alignment
 const toolbarInnerSettStyle0 = {
   visibility: innerSettTogg0 ? 'visible' : 'hidden',
   position: innerSettTogg0 ? "fixed" : "absolute",
-  bottom : innerSettTogg0 ? `${innerSettPos0.bottom}px`: "-9999px" , 
+  [position] : innerSettTogg0 ? `${innerSettPos0.bottom}px`: "-9999px" , 
   left: innerSettTogg0 ? `${innerSettPos0.left}px` : "-9999px",
 };
-// these are style components to be used for the inner window toolbar setting
+// these are style objects to be used for the inner window toolbar setting
 // position
 const toolbarInnerSettStyle1 = {
   visibility: innerSettTogg1 ? 'visible' : 'hidden',
   position: innerSettTogg1 ? "fixed" : "absolute",
-  bottom : innerSettTogg1 ? `${innerSettPos1.bottom}px`: "-9999px" , 
+  [position] : innerSettTogg1 ? `${innerSettPos1.bottom}px`: "-9999px" , 
   left: innerSettTogg1 ? `${innerSettPos1.left}px` : "-9999px",
+};
+// these are style objects to be used for the window taskbar
+// taskbar
+const winTaskbarStyle = {
+  justifyContent : alignment,
+  [position] : 0,
+  [border] : '2px solid var(--borshade0)'
+};
+// () to calc position of the window startbox 
+// according to the alignment it set by user`
+const alignCalcOfWinStartBox = () =>{
+  const startEleLeftPos = startEleRef.current.getBoundingClientRect().left;
+  if (alignment === "left") {
+    return startEleLeftPos;
+  }else if(alignment === "right"){
+    return startEleLeftPos;
+  }else if(alignment === "center"){
+    return startEleLeftPos
+  }else if(alignment === "space-between"){
+    return 0;
+  }
+}
+// these are style objects to be used for the inner window start box
+// position
+const winStartboxStyle = {
+  visibility: startTogg ? 'visible' : 'hidden',
+  position: startTogg ? "fixed" : "absolute",
+  [position]: startTogg ? (taskbarEleRef.current ? `${taskbarHeigClac()}px` : '0') : "-9999px",
+  left : startTogg ? `${alignCalcOfWinStartBox()}px` : "-9999px",
+};
+// these are style objects to be used for the inner window start box banner item
+// transform
+const winStartboxOuterItem1 = {
+  transform: transform
 };
   return (
     <SettingContext.Provider
@@ -264,13 +344,18 @@ const toolbarInnerSettStyle1 = {
         rcMenuEleRef,
         rightclickTogg,
         toolbarMenuEleRef,
+        winStartboxOuterItem1,
+        winTaskbarStyle,
+        winStartBoxRef,
         settTogg,
+        winStartboxStyle,
         turnOffCompo,
+        position,
         commonSettFunc,
         WinStart
       }}>
       <WinTaskbar />
-      { startTogg ? <WinStartBox /> : null}
+      <WinStartBox />
       <WinTaskbarSett />
       <WinRightClick />
       {/* this component is for the alignment of inner window toolbar setting */}
@@ -290,6 +375,3 @@ const toolbarInnerSettStyle1 = {
     </SettingContext.Provider>
   )
 }
-
-export { SettingContext , App };
-

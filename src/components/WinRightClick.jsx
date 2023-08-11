@@ -1,5 +1,5 @@
 import React,{useContext}from 'react';
-import { SettingContext } from '../components/App';
+import { SettingContext } from './Manager';
 import { WinCommonMenuItem } from './common/WinCommonMenuItem';
 
 export const WinRightClick = () => {

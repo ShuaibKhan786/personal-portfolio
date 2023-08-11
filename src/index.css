@@ -10,7 +10,7 @@
 }
 :root{
   /* background colors */
-  --shade0: #087c7c;
+  --shade0: #008080;
   --shade1: #272727;
   /* font colors */
   --sahde11: #000;
@@ -30,6 +30,8 @@
   --shade11:#8c8c8c;
   --shade12: #f1f1f1;
   --shade13: #010066;
+  --shade14: #c0c0be;
+  --sahde15: #818180;
 }
 .light {
   --bg : var(--shade0);
@@ -40,6 +42,8 @@
   --borshade2 : var(--shade8);
   --borshade3 : var(--shade4);   
   --bachov : var(--shade13);
+  --bannercol : var(--shade14);
+  --bannerbg: var(--sahde15);
 }
 .dark { 
   --bg : var(--shade1);
@@ -50,6 +54,8 @@
   --borshade2 : var(--shade9);
   --borshade3 : var(--shade10);
   --bachov : var(--shade1);
+  --bannercol : var(--shade12);
+  --bannerbg: var(--shade1)
 }
 *{
   box-sizing: border-box;
@@ -69,9 +75,7 @@ body{
   justify-content: space-between;
   width: 100%;
   background-color: var(--navbg);
-  border-top: 2px solid var(--borshade0) ;
   position: fixed;
-  bottom: 0;
   left: 0;
   z-index: 2;    
 }
@@ -90,6 +94,9 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.wintaskbar-item:hover{
+  cursor: pointer;
 }
 /* just for the input background only and placeholder */
 .wintaskbar-item-inp::placeholder{
@@ -129,17 +136,48 @@ body{
   border-bottom-color: var(--borshade3);
   border-right-color: var(--borshade3);
 }
-/* for window start box */
-.winstartbox{
+/* for common menu  box */
+.commonMenuBox{
   display: flex;
   flex-direction: column;
   position: fixed;
   z-index: 2;
   background-color: var(--navbg);
-  border: none;
+  margin: 0;
   outline: none;
   border: 2px solid ;
   padding: 1px 0 1px 0;
+}
+/* for the window start box */
+.winstartbox{
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  z-index: 2;
+  background-color: var(--bannerbg);
+  margin: 0;
+  outline: none;
+  border: 2px solid ;
+  padding: 1px 0 1px 0;
+}
+.winstartbox-outer-item-1{
+  display: flex;
+  writing-mode: vertical-rl;
+  
+}
+
+.winstartbox-inner-bottom{
+  font-family: 'win-font-bold';
+  color: var(--bannercol);
+  padding: 3px 2px 4px 0;
+  align-self: flex-end;
+}
+.winstartbox-inner-top{
+  color: var(--shade12);
+  font-size: 20px;
+  padding: 4px 0px 100px 0;
+  align-self: flex-start;
+  filter: brightness(200);
 }
 /* for some common use I have to shift down this css*/
 .wintaskbar-item-border0{
@@ -182,5 +220,11 @@ body{
   }
   .wintaskbar-item-inp{
     width: 120px;
+  }
+  .winstartbox-inner-bottom{
+    padding: 3px 8px 4px 0;
+  }
+  .winstartbox-inner-top{
+    padding: 4px 2px 100px 0;
   }
 }
