@@ -29,6 +29,7 @@ export const Manager = () => {
   const [position,setPosition] = useState("bottom");
   const [border,setBorder] = useState("borderTop");
   const [transform,setTransform] = useState("rotate(180deg)");
+  const [transform1,setTransform1] = useState("rotate(360deg)");
   // mouse position 
   // state for the mousePos of window taskbar
   const [clientX,setClientX] = useState(0);
@@ -102,7 +103,7 @@ export const Manager = () => {
   }
   // () to calculate the height of the taskbar
   const taskbarHeigClac = () =>{
-    return taskbarEleRef.current.offsetHeight;
+    return taskbarEleRef.current.offsetHeight - 0.5;
   }
   const start = () =>{
     setSettTogg(false);
@@ -132,7 +133,7 @@ export const Manager = () => {
 //**** all the WinRightCLick component of window starts here
   const rightCLick = (event) => {
     event.preventDefault();
-    const classNamesToCheck = ['wintaskbar', 'c-dummy-0' , 'dummy-1' , 'wintaskbar-outer-item'];
+    const classNamesToCheck = ['wintaskbar', 'c-dummy-0' , 'dummy-1' , 'wintaskbar-outer-item' , 'c-dummy-1'];
     const isAnyClassFound = classNamesToCheck.some(className => event.target.classList.contains(className));
     if(!isAnyClassFound){
       setMousePos({
@@ -266,6 +267,7 @@ const commonSettFunc = (event) =>{
       setInnerSettTogg1(false);
       setSettTogg(false);
       setTransform("rotate(360deg)");
+      setTransform1("rotate(180deg)");
       break;
     case "bottom":
       setPosition("bottom");
@@ -273,6 +275,7 @@ const commonSettFunc = (event) =>{
       setInnerSettTogg1(false);
       setSettTogg(false);
       setTransform("rotate(180deg)");
+      setTransform1("rotate(0deg)");
       break;
       default:
     break;
@@ -299,7 +302,7 @@ const toolbarInnerSettStyle1 = {
 const winTaskbarStyle = {
   justifyContent : alignment,
   [position] : 0,
-  [border] : '2px solid var(--borshade0)'
+  [border] : `2px solid ${position === "bottom" ? 'var(--borshade0)' : 'var(--borshade1)'}`
 };
 // () to calc position of the window startbox 
 // according to the alignment it set by user`
@@ -325,9 +328,13 @@ const winStartboxStyle = {
 };
 // these are style objects to be used for the inner window start box banner item
 // transform
-const winStartboxOuterItem1 = {
+const winStartboxOuterItem1Style = {
   transform: transform
 };
+const winStartboxOuterItem2Style = {
+  transform: transform1,
+};
+
   return (
     <SettingContext.Provider
       value={{theme,
@@ -344,13 +351,16 @@ const winStartboxOuterItem1 = {
         rcMenuEleRef,
         rightclickTogg,
         toolbarMenuEleRef,
-        winStartboxOuterItem1,
+        winStartboxOuterItem1Style,
         winTaskbarStyle,
         winStartBoxRef,
         settTogg,
+        setSettTogg,
         winStartboxStyle,
         turnOffCompo,
         position,
+        transform1,
+        winStartboxOuterItem2Style,
         commonSettFunc,
         WinStart
       }}>
@@ -375,3 +385,5 @@ const winStartboxOuterItem1 = {
     </SettingContext.Provider>
   )
 }
+
+

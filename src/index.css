@@ -14,7 +14,7 @@
   --shade1: #272727;
   /* font colors */
   --sahde11: #000;
-  --shade12: #cccccc;
+  --shade12: #c0c0c0;
   /* windowtaskbar colors */
   --shade2: #c3c3c3;
   --shade3: #414141;
@@ -44,6 +44,7 @@
   --bachov : var(--shade13);
   --bannercol : var(--shade14);
   --bannerbg: var(--sahde15);
+  --fill: var(--shade3);
 }
 .dark { 
   --bg : var(--shade1);
@@ -55,7 +56,8 @@
   --borshade3 : var(--shade10);
   --bachov : var(--shade1);
   --bannercol : var(--shade12);
-  --bannerbg: var(--shade1)
+  --bannerbg: var(--shade1);
+  --fill: var(--shade12);
 }
 *{
   box-sizing: border-box;
@@ -140,32 +142,20 @@ body{
 .commonMenuBox{
   display: flex;
   flex-direction: column;
-  position: fixed;
-  z-index: 2;
   background-color: var(--navbg);
-  margin: 0;
-  outline: none;
   border: 2px solid ;
   padding: 1px 0 1px 0;
 }
 /* for the window start box */
 .winstartbox{
   display: flex;
-  flex-direction: column;
-  position: fixed;
-  z-index: 2;
   background-color: var(--bannerbg);
-  margin: 0;
-  outline: none;
   border: 2px solid ;
-  padding: 1px 0 1px 0;
 }
 .winstartbox-outer-item-1{
   display: flex;
   writing-mode: vertical-rl;
-  
 }
-
 .winstartbox-inner-bottom{
   font-family: 'win-font-bold';
   color: var(--bannercol);
@@ -179,6 +169,27 @@ body{
   align-self: flex-start;
   filter: brightness(200);
 }
+.winstartbox-outer-item-2{
+  display: flex;
+  flex-direction: column;
+  background-color: var(--navbg);
+}
+.socialmedia{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 0px 6px;
+}
+.socialmedia-item > svg {
+    fill: var(--fill);
+    height: 22px;
+    width:22px;
+}
+.socialmedia-item > svg :hover{
+  fill: var(--bachov); 
+}
+
 /* for some common use I have to shift down this css*/
 .wintaskbar-item-border0{
   border-top-color: var(--borshade0);
@@ -200,6 +211,7 @@ body{
   margin-right: 1px;
 }
 .wincommon-item:hover{
+  display: inline-block;
   font-weight: bold;
   cursor: pointer;
   background-color: var(--bachov);

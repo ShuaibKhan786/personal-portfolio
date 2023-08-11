@@ -1,7 +1,7 @@
 import React from 'react'
 
-export const WinCommonLine = () => {
+export const WinCommonLine = ({style}) => {
   return (
-    <div className='commonLine'></div>
+    <div className='commonLine' style={style}></div>
   )
 }
