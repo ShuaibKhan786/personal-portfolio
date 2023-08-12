@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/personal-portfolio/static/css/main.d32eeac0.css",
-    "main.js": "/personal-portfolio/static/js/main.1b07709d.js",
+    "main.js": "/personal-portfolio/static/js/main.a1fb880f.js",
     "static/media/MS-Sans-Serif-8pt-bold.ttf": "/personal-portfolio/static/media/MS-Sans-Serif-8pt-bold.885aa008d57a83ca1349.ttf",
     "static/media/W95FA.otf": "/personal-portfolio/static/media/W95FA.ad7cea682bb510ac5f4a.otf",
     "static/media/window95-start-logo (2).svg": "/personal-portfolio/static/media/window95-start-logo (2).be3e6b457b984f0683770693b9b7222d.svg",
@@ -11,10 +11,10 @@
     "static/media/linkedin.svg": "/personal-portfolio/static/media/linkedin.f6fb7dc49e666717fb50dbd95e10b4df.svg",
     "static/media/facebook.svg": "/personal-portfolio/static/media/facebook.1bf5dc82d0b239b0cad6da07fcddce91.svg",
     "main.d32eeac0.css.map": "/personal-portfolio/static/css/main.d32eeac0.css.map",
-    "main.1b07709d.js.map": "/personal-portfolio/static/js/main.1b07709d.js.map"
+    "main.a1fb880f.js.map": "/personal-portfolio/static/js/main.a1fb880f.js.map"
   },
   "entrypoints": [
     "static/css/main.d32eeac0.css",
-    "static/js/main.1b07709d.js"
+    "static/js/main.a1fb880f.js"
   ]
 }
