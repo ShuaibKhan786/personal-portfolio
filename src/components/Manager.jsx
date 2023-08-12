@@ -193,7 +193,7 @@ export const Manager = () => {
       document.removeEventListener('contextmenu', rightCLick);
       document.removeEventListener('click', turnOffCompo0);
     };
-  }, []);
+  }, [rightClick, turnOffCompo0]);
 // till here ****
 const commonSettFunc = (event) =>{
   // event deligation 
