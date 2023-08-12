@@ -182,7 +182,7 @@ export const Manager = () => {
         clienty: adjustedTop,
       });
     }
-  }, [mousePos.clientx, mousePos.clienty, rightclickTogg  ]);
+  }, [mousePos.clientx, mousePos.clienty, rightclickTogg ,position]);
   
   useEffect(() => {
     // Attach the event listener when the component mounts
