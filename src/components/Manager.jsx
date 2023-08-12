@@ -4,6 +4,7 @@ import { WinStartBox } from './WinStartBox';
 import { WinTaskbarSett } from './WinTaskbarSett';
 import { WinRightClick } from './WinRightClick';
 import { WinCommonMenuItem } from './common/WinCommonMenuItem';
+import { WinMyComp } from './WinMyComp';
 // all the svg icons to be used
 import {ReactComponent as WinStart} from '../asset/icons/window95-start-logo (2).svg';
 import {ReactComponent as WinBg } from '../asset/icons/window95-bg-logo.svg';
@@ -151,7 +152,7 @@ export const Manager = () => {
     }
     const rightCLick = (event) => {
       event.preventDefault();
-      const classNamesToCheck = ['wintaskbar', 'c-dummy-0' , 'dummy-1' , 'wintaskbar-outer-item' , 'c-dummy-1'];
+      const classNamesToCheck = ['wintaskbar', 'c-dummy-0', 'dummy-1' , 'wintaskbar-outer-item' , 'c-dummy-1'];
       const isAnyClassFound = classNamesToCheck.some(className => event.target.classList.contains(className));
       if(!isAnyClassFound){
         setMousePos({
@@ -341,6 +342,9 @@ const winStartboxOuterItem2Style = {
 const winbg = {
   bottom : winBg ? (taskbarEleRef.current ? `${taskbarHeigClac()}px` : 0) : 0,
 }
+const myCompStyle = {
+  top: position === "top" ?  (taskbarEleRef.current ? `${taskbarHeigClac()}px` : 0) : 0,
+};
 useEffect(() => {
   // Function to handle the window resize event
   const handleResize = () => {
@@ -400,6 +404,7 @@ useEffect(() => {
         winStartboxStyle,
         turnOffCompo,
         position,
+        myCompStyle,
         transform1,
         winStartboxOuterItem2Style,
         commonSettFunc,
@@ -428,6 +433,8 @@ useEffect(() => {
           style={winbg}>
         <WinBg />
       </div>
+      {/* for the my Computer Component */}
+      <WinMyComp />
     </SettingContext.Provider>
   )
 }
