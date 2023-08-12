@@ -152,6 +152,7 @@ body{
   display: flex;
   background-color: var(--bannerbg);
   border: 2px solid ;
+  z-index: 2;
 }
 .winstartbox-outer-item-1{
   display: flex;
@@ -234,6 +235,22 @@ body{
   fill: var(--shade2);
   height: 35px;
   width: 185px;
+}
+.my-computer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 2px;
+  padding: 8px;
+  color: var(--shade17);
+  font-weight: lighter;
+  position: fixed;
+  z-index: 1;
+}
+.my-computer > span{
+  font-size: 14px;
+  filter: brightness(2);
 }
 /* for mobile responsive */
 @media screen and (max-width : 600px){
