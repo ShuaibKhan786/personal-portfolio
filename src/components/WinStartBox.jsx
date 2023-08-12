@@ -70,4 +70,3 @@ function SocialMedia({items,links,style}){
       </div>
   )
 }
-

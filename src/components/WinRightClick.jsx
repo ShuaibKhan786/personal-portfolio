@@ -11,7 +11,8 @@ export const WinRightClick = () => {
     visibility: rightclickTogg ? 'visible' : 'hidden',
     position: rightclickTogg ? "fixed" : "absolute",
     top: rightclickTogg ? `${mousePos.clienty}px` : "-9999px",
-    left: rightclickTogg ? `${mousePos.clientx}px` : "-9999px"
+    left: rightclickTogg ? `${mousePos.clientx}px` : "-9999px",
+    zIndex : 1
   };
   return (
     <WinCommonMenuItem 
