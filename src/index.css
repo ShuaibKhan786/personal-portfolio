@@ -160,7 +160,7 @@ body{
 .winstartbox-inner-bottom{
   font-family: 'win-font-bold';
   color: var(--bannercol);
-  padding: 3px 2px 4px 0;
+  padding: 3px 0px 4px 0;
   align-self: flex-end;
 }
 .winstartbox-inner-top{
@@ -244,8 +244,9 @@ body{
   .wintaskbar-item-inp{
     width: 120px;
   }
+  
   .winstartbox-inner-bottom{
-    padding: 3px 8px 4px 0;
+    padding: 3px 2px 4px 0;
   }
   .winstartbox-inner-top{
     padding: 4px 2px 100px 0;
