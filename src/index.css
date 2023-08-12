@@ -27,11 +27,11 @@
   --shade8: #797979;
   --shade9: #1a1a1a;
   --shade10: #a0a0a0;
-  --shade11:#8c8c8c;
-  --shade12: #f1f1f1;
-  --shade13: #010066;
-  --shade14: #c0c0be;
-  --sahde15: #818180;
+  --shade13:#8c8c8c;
+  --shade14: #f1f1f1;
+  --shade15: #010066;
+  --shade16: #c0c0be;
+  --sahde17: #818180;
 }
 .light {
   --bg : var(--shade0);
@@ -41,23 +41,23 @@
   --borshade1 : var(--shade7);
   --borshade2 : var(--shade8);
   --borshade3 : var(--shade4);   
-  --bachov : var(--shade13);
-  --bannercol : var(--shade14);
-  --bannerbg: var(--sahde15);
+  --bachov : var(--shade15);
+  --bannercol : var(--shade16);
+  --bannerbg: var(--sahde17);
   --fill: var(--shade3);
 }
 .dark { 
   --bg : var(--shade1);
-  --fcolor: var(--shade12);
+  --fcolor: var(--shade16);
   --navbg: var(--shade3);
   --borshade0: var(--shade6);
   --borshade1: var(--shade7);
   --borshade2 : var(--shade9);
   --borshade3 : var(--shade10);
   --bachov : var(--shade1);
-  --bannercol : var(--shade12);
+  --bannercol : var(--shade16);
   --bannerbg: var(--shade1);
-  --fill: var(--shade12);
+  --fill: var(--shade16);
 }
 *{
   box-sizing: border-box;
@@ -164,7 +164,7 @@ body{
   align-self: flex-end;
 }
 .winstartbox-inner-top{
-  color: var(--shade12);
+  color: var(--shade14);
   font-size: 20px;
   padding: 4px 0px 100px 0;
   align-self: flex-start;
@@ -216,15 +216,25 @@ body{
   font-weight: bold;
   cursor: pointer;
   background-color: var(--bachov);
-  color: var(--shade12);
+  color: var(--shade14);
 }
 /* common line i,e a line between the items for separation */
 .commonLine {
   margin: 0px 4px;
-  border-top: 1.4px solid var(--shade11);
-  border-bottom: 1.4px solid var(--shade12);
+  border-top: 1.4px solid var(--shade13);
+  border-bottom: 1.4px solid var(--shade14);
 }
-
+.winbg{
+  position: fixed;
+  z-index: -1;
+  padding: 2px 4px;
+  right: 0;
+}
+.winbg > svg{
+  fill: var(--shade2);
+  height: 35px;
+  width: 185px;
+}
 /* for mobile responsive */
 @media screen and (max-width : 600px){
   .wintaskbar-item{
@@ -239,5 +249,9 @@ body{
   }
   .winstartbox-inner-top{
     padding: 4px 2px 100px 0;
+  }
+  .winbg > svg{
+    height: 30px;
+    width: 170px;
   }
 }

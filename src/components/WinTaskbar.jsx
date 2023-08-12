@@ -11,6 +11,7 @@ export const WinTaskbar = () => {
     WinStart,
     taskbarEleRef,
     winTaskbarStyle,
+    startDisabled,
     turnOffCompo,
     winTaskbar,
     time
@@ -30,6 +31,7 @@ export const WinTaskbar = () => {
           className={`wintaskbar-item wintaskbar-item-border0 winstart-item-start c-dummy-0 dummy-1`}
           onClick={start}
           ref={startEleRef}
+          style={startDisabled}
         >
           <WinStart />
           <div className="c-dummy-0 dummy-1">Start</div>

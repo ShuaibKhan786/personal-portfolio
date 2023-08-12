@@ -9,7 +9,13 @@ import {ReactComponent as Instagram} from '../asset/icons/instagram.svg';
 
 
 export const WinStartBox = () => {
-  const {  winStartboxStyle , winStartBoxRef , winStartboxOuterItem1Style , winStartboxOuterItem2Style ,transform1 ,setSettTogg } = useContext(SettingContext);
+  const { winStartboxStyle ,
+          winStartBoxRef ,
+          winStartboxOuterItem1Style ,
+          winStartboxOuterItem2Style ,
+          transform1 ,
+          setSettTogg  
+      } = useContext(SettingContext);
   const contextMenuStyle = {
     border: "none",
     transform: transform1

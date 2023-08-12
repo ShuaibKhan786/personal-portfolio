@@ -5,7 +5,8 @@ import { WinTaskbarSett } from './WinTaskbarSett';
 import { WinRightClick } from './WinRightClick';
 import { WinCommonMenuItem } from './common/WinCommonMenuItem';
 // all the svg icons to be used
-import {ReactComponent as WinStart} from '../asset/icons/window95-start-logo (2).svg'
+import {ReactComponent as WinStart} from '../asset/icons/window95-start-logo (2).svg';
+import {ReactComponent as WinBg } from '../asset/icons/window95-bg-logo.svg';
 export const SettingContext = createContext();
 
 export const Manager = () => {
@@ -30,6 +31,8 @@ export const Manager = () => {
   const [border,setBorder] = useState("borderTop");
   const [transform,setTransform] = useState("rotate(180deg)");
   const [transform1,setTransform1] = useState("rotate(360deg)");
+  const [startDisabled,setstartDisabled] = useState({});
+  const [winBg,setwinBg] = useState(true);
   // mouse position 
   // state for the mousePos of window taskbar
   const [clientX,setClientX] = useState(0);
@@ -267,6 +270,7 @@ const commonSettFunc = (event) =>{
       setSettTogg(false);
       setTransform("rotate(360deg)");
       setTransform1("rotate(180deg)");
+      setwinBg(false);
       break;
     case "bottom":
       setPosition("bottom");
@@ -275,6 +279,7 @@ const commonSettFunc = (event) =>{
       setSettTogg(false);
       setTransform("rotate(180deg)");
       setTransform1("rotate(0deg)");
+      setwinBg(true);
       break;
       default:
     break;
@@ -333,6 +338,42 @@ const winStartboxOuterItem1Style = {
 const winStartboxOuterItem2Style = {
   transform: transform1,
 };
+const winbg = {
+  bottom : winBg ? (taskbarEleRef.current ? `${taskbarHeigClac()}px` : 0) : 0,
+}
+useEffect(() => {
+  // Function to handle the window resize event
+  const handleResize = () => {
+    const windowHeight = window.innerHeight;
+    const taskbarStartboxHeight =
+      taskbarEleRef.current.offsetHeight + winStartBoxRef.current.offsetHeight;
+
+    // Check if the combined height of taskbar and winStartBox overflows window height
+    if (taskbarStartboxHeight > windowHeight) {
+      // If overflow, disable the start button and make other adjustments
+      setstartDisabled({ pointerEvents: "none" }); // Disable button click
+      setStartTogg(false); // Disable other start functionality
+      remove(startEleRef, 'wintaskbar-item-border1');
+      add(startEleRef, 'wintaskbar-item-border0');
+    } else {
+      // If no overflow, enable the start button and revert adjustments
+      setstartDisabled({}); // Enable button click
+    }
+  };
+
+  // Attach the window resize event listener
+  window.addEventListener('resize', handleResize);
+
+  // Call the handleResize function initially
+  handleResize();
+
+  // Clean up the event listener when the component unmounts
+  return () => {
+    window.removeEventListener('resize', handleResize);
+  };
+}, []);
+
+
 
   return (
     <SettingContext.Provider
@@ -353,6 +394,7 @@ const winStartboxOuterItem2Style = {
         winStartboxOuterItem1Style,
         winTaskbarStyle,
         winStartBoxRef,
+        startDisabled,
         settTogg,
         setSettTogg,
         winStartboxStyle,
@@ -381,6 +423,11 @@ const winStartboxOuterItem2Style = {
         elemRefernce={toolbarInnerSettEleRef1}
         elemStyle={toolbarInnerSettStyle1}
       />
+      {/* for the banner icons of window 95 */}
+      <div className='winbg'
+          style={winbg}>
+        <WinBg />
+      </div>
     </SettingContext.Provider>
   )
 }
