@@ -131,38 +131,48 @@ export const Manager = () => {
 // till here *****
 
 //**** all the WinRightCLick component of window starts here
-  const rightCLick = (event) => {
-    event.preventDefault();
-    const classNamesToCheck = ['wintaskbar', 'c-dummy-0' , 'dummy-1' , 'wintaskbar-outer-item' , 'c-dummy-1'];
-    const isAnyClassFound = classNamesToCheck.some(className => event.target.classList.contains(className));
-    if(!isAnyClassFound){
-      setMousePos({
-        clientx: event.clientX,
-        clienty: event.clientY
-      });
-     setRightclickTogg(true);
-     setStartTogg(false);
-     setSettTogg(false);
-     setInnerSettTogg0(false);
-     setInnerSettTogg1(false);
-     remove(startEleRef,'wintaskbar-item-border1');
-     add(startEleRef,'wintaskbar-item-border0');
+  
+  useEffect(() => {
+    const turnOffCompo0 = (event) => {
+      const classNamesToCheck = ['c-dummy-1' , 'dummy-1' ];
+      const isAnyClassFound = classNamesToCheck.some(className => event.target.classList.contains(className));
+      if (!isAnyClassFound) {
+        setRightclickTogg(false);
+        setStartTogg(false);
+        setSettTogg(false);
+        setInnerSettTogg0(false);
+        setInnerSettTogg1(false);
+        remove(startEleRef, 'wintaskbar-item-border1');
+        add(startEleRef, 'wintaskbar-item-border0');
+      }
     }
-  };
-  const turnOffCompo0 = (event) => {
-    const classNamesToCheck = ['c-dummy-1' , 'dummy-1' ];
-    const isAnyClassFound = classNamesToCheck.some(className => event.target.classList.contains(className));
-    if (!isAnyClassFound) {
-      setRightclickTogg(false);
-      setStartTogg(false);
-      setSettTogg(false);
-      setInnerSettTogg0(false);
-      setInnerSettTogg1(false);
-      remove(startEleRef, 'wintaskbar-item-border1');
-      add(startEleRef, 'wintaskbar-item-border0');
+    const rightCLick = (event) => {
+      event.preventDefault();
+      const classNamesToCheck = ['wintaskbar', 'c-dummy-0' , 'dummy-1' , 'wintaskbar-outer-item' , 'c-dummy-1'];
+      const isAnyClassFound = classNamesToCheck.some(className => event.target.classList.contains(className));
+      if(!isAnyClassFound){
+        setMousePos({
+          clientx: event.clientX,
+          clienty: event.clientY
+        });
+       setRightclickTogg(true);
+       setStartTogg(false);
+       setSettTogg(false);
+       setInnerSettTogg0(false);
+       setInnerSettTogg1(false);
+       remove(startEleRef,'wintaskbar-item-border1');
+       add(startEleRef,'wintaskbar-item-border0');
+      }
     }
-  };
-
+    // Attach the event listener when the component mounts
+    document.addEventListener('contextmenu', rightCLick);
+    document.addEventListener('click', turnOffCompo0);
+    // Remove the event listener when the component unmounts to avoid memory leaks
+    return () => {
+      document.removeEventListener('contextmenu', rightCLick);
+      document.removeEventListener('click', turnOffCompo0);
+    };
+  }, []);
   // all these is just to make sure when the rightclick
   // menu pop ups it doesnt overflow in any sides
   // and overlap to the toolbar element too
@@ -183,17 +193,6 @@ export const Manager = () => {
       });
     }
   }, [mousePos.clientx, mousePos.clienty, rightclickTogg ,position]);
-  
-  useEffect(() => {
-    // Attach the event listener when the component mounts
-    document.addEventListener('contextmenu', rightCLick);
-    document.addEventListener('click', turnOffCompo0);
-    // Remove the event listener when the component unmounts to avoid memory leaks
-    return () => {
-      document.removeEventListener('contextmenu', rightCLick);
-      document.removeEventListener('click', turnOffCompo0);
-    };
-  }, [rightCLick, turnOffCompo0]);
 // till here ****
 const commonSettFunc = (event) =>{
   // event deligation 
