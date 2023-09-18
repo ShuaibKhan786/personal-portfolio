@@ -192,20 +192,6 @@ body{
   fill: var(--bachov); 
 }
 
-/* for some common use I have to shift down this css*/
-.wintaskbar-item-border0{
-  border-top-color: var(--borshade0);
-  border-left-color: var(--borshade0);
-  border-bottom-color: var(--borshade1);
-  border-right-color: var(--borshade1);
-}
-.wintaskbar-item-border1{
-  border-top-color: var(--borshade1);
-  border-left-color: var(--borshade1);
-  border-bottom-color: var(--borshade0);
-  border-right-color: var(--borshade0);
-  border-radius: 0%;
-}
 /* for window rightclick item and window taskbar setting item*/
 .wincommon-item{
   background-color: inherit;
@@ -227,7 +213,7 @@ body{
 }
 .winbg{
   position: fixed;
-  z-index: 0;
+  z-index: -1;
   padding: 2px 4px;
   right: 0;
 }
@@ -252,6 +238,56 @@ body{
   font-size: 14px;
   filter: brightness(2);
 }
+.explorer-main-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--navbg);
+  z-index: 2;
+  border: 2px solid;
+}
+.explorer-outer-item{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 200px;
+  margin-right: 1px;
+  padding: 3px 4px ;
+  background-color: var(--bachov);
+  color: var(--shade4);
+}
+.explorer-outer-item1{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+}
+.explorer-inner-item{
+  border: 9px solid;
+  height: 14px;
+  width: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.just-font{
+  font-weight: 500;
+}
+/* for some common use I have to shift down this css*/
+.wintaskbar-item-border0{
+  border-top-color: var(--borshade0);
+  border-left-color: var(--borshade0);
+  border-bottom-color: var(--borshade1);
+  border-right-color: var(--borshade1);
+}
+.wintaskbar-item-border1{
+  border-top-color: var(--borshade1);
+  border-left-color: var(--borshade1);
+  border-bottom-color: var(--borshade0);
+  border-right-color: var(--borshade0);
+  border-radius: 0%;
+}
 /* for mobile responsive */
 @media screen and (max-width : 600px){
   .wintaskbar-item{
@@ -271,5 +307,8 @@ body{
   .winbg > svg{
     height: 30px;
     width: 170px;
+  }
+  .just-font{
+    font-weight: 900;
   }
 }

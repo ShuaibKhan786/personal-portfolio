@@ -4,6 +4,7 @@ import { WinStartBox } from './WinStartBox';
 import { WinTaskbarSett } from './WinTaskbarSett';
 import { WinRightClick } from './WinRightClick';
 import { WinCommonMenuItem } from './common/WinCommonMenuItem';
+import { WinCommonExplorer } from './common/WinCommonExplorer';
 import { WinMyComp } from './WinMyComp';
 // all the svg icons to be used
 import {ReactComponent as WinStart} from '../asset/icons/window95-start-logo (2).svg';
@@ -435,6 +436,7 @@ useEffect(() => {
       </div>
       {/* for the my Computer Component */}
       <WinMyComp />
+      {/* <WinCommonExplorer winExplorerName="Welcome"/> */}
     </SettingContext.Provider>
   )
 }
